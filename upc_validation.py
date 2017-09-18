@@ -65,10 +65,11 @@ def is_valid_upc(upc_string):
     valid_check_digit = check_digit(upc_string)
 
     r = {
-        'check_digit_valid': valid_check_digit
+        'valid_check_digit': valid_check_digit,
+        'raw':upc_string
     }
     r.update(check_length(upc_string))
-    is_valid = r['check_digit_valid'] and r['valid_length']
+    is_valid = r['valid_check_digit'] and r['valid_length']
 
     r.update({'is_valid':is_valid})
 
