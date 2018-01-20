@@ -58,17 +58,27 @@ def check_digit(upc_string):
 
     return summed_total % 10 == 0
 
+def normalize_upc(upc_in):
+
+    numbers = {'0','1','2','3','4','5','6','7','8','9'}
+
+    try:
+        upc_out = ''.join([x for x in upc_in if x in numbers])
+    except TypeError:
+        upc_out = ''
+
+    return upc_out
 
 def is_valid_upc(upc_string):
-    upc_string = str(upc_string)
+    n_upc_string = normalize_upc(str(upc_string))
 
-    valid_check_digit = check_digit(upc_string)
+    valid_check_digit = check_digit(n_upc_string)
 
     r = {
         'valid_check_digit': valid_check_digit,
-        'raw':upc_string
+        'raw':n_upc_string
     }
-    r.update(check_length(upc_string))
+    r.update(check_length(n_upc_string))
     is_valid = r['valid_check_digit'] and r['valid_length']
 
     r.update({'is_valid':is_valid})
